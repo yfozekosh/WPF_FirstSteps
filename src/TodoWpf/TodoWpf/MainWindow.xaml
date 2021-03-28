@@ -4,9 +4,64 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TodoWpf"
+        xmlns:viewModel="clr-namespace:TodoWpf.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525"
+        d:DataContext="{d:DesignInstance viewModel:TodoViewModel}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.6*" />
+            <ColumnDefinition Width="0.4*" />
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Header="Todo Items">
+            <ScrollViewer>
+                <ListBox ItemsSource="{Binding ToDoItems}"
+                         SelectedItem="{Binding SelectedItem}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Name}"></TextBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="Edit">
+            <Grid
+                
+                >
+                <!-- DataContext="{Binding SelectedItem}" -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="1" Grid.Column="0" Margin="0 8 0 0">Id</Label>
+                <TextBox Grid.Row="1" Grid.Column="1" IsEnabled="False" Margin="0 8 0 0"
+                         Text="{Binding SelectedItem.Id, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"></TextBox>
+
+                <Label Grid.Row="2" Grid.Column="0" Margin="0 8 0 0">Name</Label>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="0 8 0 0" Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Label Grid.Row="3" Grid.Column="0" Margin="0 8 0 0">Is Done</Label>
+                <CheckBox Grid.Row="3" Grid.Column="1" Margin="0 14 0 0" IsChecked="{Binding SelectedItem.IsDone, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <StackPanel Margin="0 15 0 0" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal">
+                    <Button Margin="0 0 15 0" Width="50">Add</Button>
+                    <Button Margin="0 0 15 0" Width="50">Update</Button>
+                    <Button Width="50">Delete</Button>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

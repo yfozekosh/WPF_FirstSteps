@@ -1,4 +1,6 @@
-﻿namespace TodoWpf
+﻿using TodoWpf.ViewModel;
+
+namespace TodoWpf
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -8,6 +10,7 @@
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new TodoViewModel();
         }
     }
 }
